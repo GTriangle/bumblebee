@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtriangle.admin.employee">
+
+	<update id="updateLoginInfo">
+		UPDATE sso_employee SET errorTime=#{errorTime},errorCount=#{errorCount},errorIp=#{errorIp}
+		<if test="lastLoginTime != null">
+			,lastLoginTime=#{lastLoginTime}
+		</if>
+		<if test="lastLoginIp != null">
+			,lastLoginIp=#{lastLoginIp}
+		</if>
+		<if test="loginCount != null">
+			,loginCount=#{loginCount}
+		</if>
+		WHERE ssoEmpId=#{ssoEmpId}
+	</update>
+
+	<resultMap id="empListMap" type="com.gtriangle.admin.bis.emp.vo.EmpListVo">
+		<result property="empId" column="id" />
+		<result property="realName" column="realName" />
+		<result property="roleName" column="roleName" />
+		<result property="locked" column="locked" />
+		<result property="created" column="created" />
+	</resultMap>
+
+	<select id="queryEmplist" resultMap="empListMap">
+		SELECT a.id,a.realName,c.roleName,d.locked,a.created
+		FROM t_b_employee a
+		LEFT JOIN t_b_emp_role b ON a.id = b.empId
+		LEFT JOIN t_b_role c ON b.roleId = c.id AND c.dataStatus = 1
+		LEFT JOIN sso_employee_app d ON a.id = d.ssoEmpId
+		ORDER BY a.created DESC
+		<if test="start != null and start >= 0 and pageSize != null and pageSize >= 0">
+			LIMIT #{start},#{pageSize}
+		</if>
+		<if test="start != null and start > 0 and pageSize == null">
+			LIMIT #{pageSize}
+		</if>
+	</select>
+
+
+	<select id="queryEmplist_count" resultType="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM t_b_employee a
+	</select>
+
+	<select id="queryEmpDetail" resultType="java.util.Map">
+		SELECT a.id,a.realName,a.empName,a.empType,a.isRemoteWarn,d.locked,b.roleId
+		FROM t_b_employee a
+		LEFT JOIN t_b_emp_role b ON a.id = b.empId
+		LEFT JOIN t_b_role c ON b.roleId = c.id AND c.dataStatus = 1
+		LEFT JOIN sso_employee_app d ON a.id = d.ssoEmpId
+  		WHERE a.id = #{empId}
+	</select>
+
+</mapper>

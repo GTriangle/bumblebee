@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 只设置需要的,其他使用默认值 -->
+		<!-- 在null时也调用 setter,适应于返回Map,3.2版本以上可用 -->
+		<setting name="callSettersOnNulls" value="false" />
+	</settings>
+	<!--<mappers>-->
+		<!--<mapper resource="db/auth/sys_function.xml" />-->
+		<!--<mapper resource="db/auth/t_b_perm_url.xml" />-->
+		<!--<mapper resource="db/dict/t_t_dict.xml" />-->
+		<!--<mapper resource="db/role/t_b_role.xml" />-->
+		<!--<mapper resource="db/sso/sso_user.xml" />-->
+		<!--<mapper resource="db/user/t_b_user.xml" />-->
+	<!--</mappers>-->
+</configuration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gtriangle.admin.sso">
+
+	<update id="updateLoginInfo">
+		UPDATE sso_employee SET errorTime=#{errorTime},errorCount=#{errorCount},errorIp=#{errorIp}
+		<if test="lastLoginTime != null">
+			,lastLoginTime=#{lastLoginTime}
+		</if>
+		<if test="lastLoginIp != null">
+			,lastLoginIp=#{lastLoginIp}
+		</if>
+		<if test="loginCount != null">
+			,loginCount=#{loginCount}
+		</if>
+		WHERE ssoEmpId=#{ssoEmpId}
+	</update>
+</mapper>

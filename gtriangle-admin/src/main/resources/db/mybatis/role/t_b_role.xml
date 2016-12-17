@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtriangle.admin.role">
+
+	<select id="queryRoleFuncList" resultType="com.gtriangle.admin.bis.role.vo.RoleFunctionResultVo">
+		SELECT a.funcName,a.id AS functionId,a.pid,IF(ISNULL(b.id),0,1) AS isSelected,a.funcKey
+		FROM sys_function a
+		LEFT JOIN t_b_role_function b ON a.id = b.funcId AND b.roleId = #{roleId}
+  		WHERE a.dataStatus = 1
+	</select>
+
+</mapper>
